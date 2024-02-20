@@ -2,50 +2,11 @@
 /*eslint no-unused-vars: "warn"*/
 
 import { useState, useEffect } from 'react';
-import { omdbAPIkey } from './App.jsx';
 import StarRating from './StarRating.jsx';
 import { Loader } from './Loader.jsx';
 
-// {
-//   "Title": "Kung Fu Panda",
-//   "Year": "2008",
-//   "Rated": "PG",
-//   "Released": "06 Jun 2008",
-//   "Runtime": "92 min",
-//   "Genre": "Animation, Action, Adventure",
-//   "Director": "Mark Osborne, John Stevenson",
-//   "Writer": "Jonathan Aibel, Glenn Berger, Ethan Reiff",
-//   "Actors": "Jack Black, Ian McShane, Angelina Jolie",
-//   "Plot": "To everyone's surprise, including his own, Po, an overweight, clumsy panda, is chosen as protector of the Valley of Peace. His suitability will soon be tested as the valley's arch-enemy is on his way.",
-//   "Language": "English, Russian",
-//   "Country": "United States, United Kingdom",
-//   "Awards": "Nominated for 1 Oscar. 15 wins & 39 nominations total",
-//   "Poster": "https://m.media-amazon.com/images/M/MV5BODJkZTZhMWItMDI3Yy00ZWZlLTk4NjQtOTI1ZjU5NjBjZTVjXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
-//   "Ratings": [
-//       {
-//           "Source": "Internet Movie Database",
-//           "Value": "7.6/10"
-//       },
-//       {
-//           "Source": "Rotten Tomatoes",
-//           "Value": "87%"
-//       },
-//       {
-//           "Source": "Metacritic",
-//           "Value": "74/100"
-//       }
-//   ],
-//   "Metascore": "74",
-//   "imdbRating": "7.6",
-//   "imdbVotes": "511,413",
-//   "imdbID": "tt0441773",
-//   "Type": "movie",
-//   "DVD": "25 Nov 2015",
-//   "BoxOffice": "$215,771,591",
-//   "Production": "N/A",
-//   "Website": "N/A",
-//   "Response": "True"
-// }
+const REACT_APP_OMDB_KEY = '646978e2';
+
 export function MovieSummary({
   selectedId,
   onCloseMovie,
@@ -96,7 +57,7 @@ export function MovieSummary({
         try {
           setIsLoading(true);
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${omdbAPIkey}&i=${selectedId}`
+            `https://www.omdbapi.com/?apikey=${REACT_APP_OMDB_KEY}&i=${selectedId}`
           );
 
           // Dealing with errors

@@ -1,1 +1,1 @@
-{ "extends": "react-app" }
+{ "extends": "react-app", "node": true }

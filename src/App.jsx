@@ -2,7 +2,6 @@
 /*eslint react/prop-types: "off"*/
 
 import { useEffect, useState } from 'react';
-import StarRating from './StarRating.jsx';
 import { WatchedList } from './WatchedList.jsx';
 import { WatchedSummary } from './WatchedSummary.jsx';
 import { ResultsList } from './ResultsList.jsx';
@@ -14,7 +13,7 @@ import { ErrorMessage } from './ErrorMessage.jsx';
 import { MovieSummary } from './MovieSummary.jsx';
 import { Loader } from './Loader.jsx';
 
-export const omdbAPIkey = '646978e2';
+const REACT_APP_OMDB_KEY = '646978e2';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -38,7 +37,7 @@ export default function App() {
       setError('');
       setIsLoading(true);
       const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${omdbAPIkey}&s=${query}`
+        `https://www.omdbapi.com/?apikey=${REACT_APP_OMDB_KEY}&s=${query}`
       );
 
       // Dealing with errors
