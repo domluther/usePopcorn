@@ -52,12 +52,14 @@ export function MovieSummary({
   }
 
   useEffect(
+    // Fetch the information needed for the summary when it is selected
     function () {
+      const controller = new AbortController();
       async function getMovieSummary() {
         try {
-          setIsLoading(true);
           const res = await fetch(
-            `https://www.omdbapi.com/?apikey=${REACT_APP_OMDB_KEY}&i=${selectedId}`
+            `https://www.omdbapi.com/?apikey=${REACT_APP_OMDB_KEY}&i=${selectedId}`,
+            { signal: controller.signal }
           );
 
           // Dealing with errors
@@ -67,24 +69,49 @@ export function MovieSummary({
 
           if (data.Response === 'False') throw new Error('Movie not found');
           setSelectedMovie(data);
-          console.log(data);
         } catch (err) {
           console.error(err.message);
         } finally {
           setIsLoading(false);
         }
       }
-      getMovieSummary();
+      // Moved into here otherwise UI seems unresponsive
+      setIsLoading(true);
+      const timer = setTimeout(() => getMovieSummary());
+
+      return () => {
+        // Cleanup - no need for the AbortController or the timeout.
+        controller.abort();
+        clearTimeout(timer);
+      };
     },
     [selectedId]
   );
 
   useEffect(
-    function () {
+    // Set title of window when movie summary is shown
+    () => {
       if (!title) return;
       document.title = `Movie: ${title}`;
+      // Returns clean up function - runs when movieSummary unmounts and 'undoes' the effect.
+      return () => (document.title = 'usePopcorn');
     },
     [title]
+  );
+
+  useEffect(
+    function () {
+      function closeWithEscape(e) {
+        if (e.code === 'Escape') {
+          onCloseMovie();
+        }
+      }
+      document.addEventListener('keydown', closeWithEscape);
+
+      // Cleanup - remove the event listener after the instance has closed
+      return () => document.removeEventListener('keydown', closeWithEscape);
+    },
+    [onCloseMovie]
   );
 
   return (

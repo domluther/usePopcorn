@@ -2,7 +2,6 @@
 
 export function WatchedMovie({ movie, onDeleteMovie, onSelectMovie }) {
   function selectMovie() {
-    console.log(movie);
     onSelectMovie(movie.imdbID);
   }
 

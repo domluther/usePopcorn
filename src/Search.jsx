@@ -21,9 +21,6 @@ export function Search({ onSearch }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      {/* <span>
-        <button className="search-btn">🔍</button>
-      </span> */}
     </form>
   );
 }

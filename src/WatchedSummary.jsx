@@ -28,10 +28,9 @@ export function WatchedSummary({ watched, setWatched }) {
     <div className="summary">
       <h2>Films you watched</h2>
       <div>
-        <p onClick={toggleOrder}>{ascOrder ? '⬆' : '⬇'}</p>
         <p onClick={() => sortBy('title')}>
-          <span>#️⃣</span>
-          <span>{watched.length} films</span>
+          <span>🎬</span>
+          <span>{watched.length}</span>
         </p>
         <p onClick={() => sortBy('imdbRating')}>
           <span>⭐️</span>
@@ -45,6 +44,7 @@ export function WatchedSummary({ watched, setWatched }) {
           <span>⏳</span>
           <span>{avgRuntime.toFixed(0)} min</span>
         </p>
+        <p onClick={toggleOrder}>{ascOrder ? '⬆' : '⬇'}</p>
       </div>
     </div>
   );

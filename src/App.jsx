@@ -17,6 +17,7 @@ const REACT_APP_OMDB_KEY = '646978e2';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
+  // Used to store the movies that have been clicked on
   const [watched, setWatched] = useState(() => {
     const localValue = localStorage.getItem('watchedMovies');
     if (!localValue) return [];
@@ -66,7 +67,6 @@ export default function App() {
 
   function handleCloseMovieSummary() {
     setSelectedId(null);
-    document.title = 'usePopcorn';
   }
 
   function handleAddWatched(movie) {
