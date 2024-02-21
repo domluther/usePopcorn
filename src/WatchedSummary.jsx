@@ -15,12 +15,12 @@ export function WatchedSummary({ watched, setWatched }) {
     setAscOrder((o) => !o);
   }
 
-  // TODO: How do I  make this trigger a re-render of WatchedList?
   function sortBy(order) {
+    // Needs to give a new array not mutate in place to trigger re-render
     if (ascOrder) {
-      setWatched(watched.toSorted((a, b) => a[order] - b[order]));
+      setWatched(watched.toSorted((a, b) => (a[order] < b[order] ? -1 : 1)));
     } else {
-      setWatched(watched.toSorted((a, b) => b[order] - a[order]));
+      setWatched(watched.toSorted((a, b) => (a[order] < b[order] ? 1 : -1)));
     }
   }
 
@@ -28,7 +28,8 @@ export function WatchedSummary({ watched, setWatched }) {
     <div className="summary">
       <h2>Films you watched</h2>
       <div>
-        <p>
+        <p onClick={toggleOrder}>{ascOrder ? '⬆' : '⬇'}</p>
+        <p onClick={() => sortBy('title')}>
           <span>#️⃣</span>
           <span>{watched.length} films</span>
         </p>
@@ -44,7 +45,6 @@ export function WatchedSummary({ watched, setWatched }) {
           <span>⏳</span>
           <span>{avgRuntime.toFixed(0)} min</span>
         </p>
-        <p onClick={toggleOrder}>{ascOrder ? '⬆' : '⬇'}</p>
       </div>
     </div>
   );
