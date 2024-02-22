@@ -27,6 +27,7 @@ export default function App() {
   const [error, setError] = useState('');
   const [selectedId, setSelectedId] = useState(null);
 
+  // Could also store in an effect - means it always works as opposed to doing it inside a specific function
   useEffect(
     () => localStorage.setItem('watchedMovies', JSON.stringify(watched)),
     [watched]

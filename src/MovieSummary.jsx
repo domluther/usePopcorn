@@ -1,7 +1,7 @@
 /*eslint react/prop-types: "off"*/
 /*eslint no-unused-vars: "warn"*/
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import StarRating from './StarRating.jsx';
 import { Loader } from './Loader.jsx';
 
@@ -14,12 +14,14 @@ export function MovieSummary({
   watched,
 }) {
   const [selectedMovie, setSelectedMovie] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const isDuplicate = watched.some((m) => m.imdbID === selectedId);
   const [userRating, setUserRating] = useState(0);
   const watchedRating = watched.find(
     (movie) => movie.imdbID === selectedId
   )?.userRating;
+
+  const ratedCount = useRef(0);
 
   const {
     Title: title,
@@ -50,6 +52,11 @@ export function MovieSummary({
     onAddWatched(newWatchedMovie);
     onCloseMovie();
   }
+
+  useEffect(() => {
+    if (userRating) ratedCount.current = ratedCount.current + 1;
+    console.log(`Logged ${ratedCount.current} times`);
+  }, [userRating]);
 
   useEffect(
     // Fetch the information needed for the summary when it is selected
